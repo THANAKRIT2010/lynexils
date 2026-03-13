@@ -17,7 +17,7 @@ overflow:hidden;
 text-align:center;
 }
 
-/* PARTICLES BACKGROUND */
+/* PARTICLES */
 #particles-js{
 position:fixed;
 width:100%;
@@ -25,7 +25,7 @@ height:100%;
 z-index:-2;
 }
 
-/* CENTER CARD */
+/* CARD */
 .container{
 position:absolute;
 top:50%;
@@ -70,7 +70,7 @@ color:#7dd3fc;
 text-shadow:0 0 5px #38bdf8,0 0 20px #38bdf8,0 0 50px rgba(56,189,248,.7);
 }
 
-/* CYBER LINE */
+/* LINE */
 .line{
 width:140px;
 height:2px;
@@ -79,12 +79,7 @@ margin:14px auto;
 box-shadow:0 0 10px #38bdf8;
 }
 
-/* TEXT */
-.desc{
-font-size:14px;
-margin-bottom:5px;
-opacity:.9;
-}
+.desc{font-size:14px;margin-bottom:5px;opacity:.9}
 
 /* BUTTON */
 .btn{
@@ -123,16 +118,9 @@ padding:10px 20px;
 border-radius:10px;
 cursor:pointer;
 box-shadow:0 0 10px #38bdf8;
-transition:.25s;
 }
 
-#musicBtn:hover{
-background:#38bdf8;
-color:#021220;
-box-shadow:0 0 20px #38bdf8,0 0 40px #38bdf8;
-}
-
-/* SHOOTING STAR */
+/* STAR */
 .star{
 position:absolute;
 width:2px;
@@ -170,31 +158,28 @@ animation:shoot 4s linear;
 
 </div>
 
-<!-- MUSIC -->
+<!-- MUSIC BUTTON -->
 <div class="music-box">
 <button id="musicBtn">🔊 Play Music</button>
 </div>
 
-<iframe id="ytmusic" width="0" height="0"
-src="https://www.youtube.com/embed/Fameo0cnJzI?enablejsapi=1&loop=1&playlist=Fameo0cnJzI"
-frameborder="0" allow="autoplay"></iframe>
+<div id="player"></div>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
 
 <script>
+
+/* PARTICLES */
 particlesJS("particles-js",{
 particles:{
 number:{value:80},
-color:{value:"#7c3aed"},
+color:{value:"#38bdf8"},
 shape:{type:"circle"},
 opacity:{value:.6},
 size:{value:3},
-line_linked:{enable:true,distance:150,color:"#7c3aed",opacity:.4},
+line_linked:{enable:true,distance:150,color:"#38bdf8",opacity:.4},
 move:{enable:true,speed:2}
-},
-interactivity:{
-events:{onhover:{enable:true,mode:"repulse"}},
-modes:{repulse:{distance:120}}
 }
 })
 
@@ -221,22 +206,38 @@ setTimeout(()=>{s.remove()},4000)
 }
 setInterval(star,1500)
 
-/* MUSIC */
+/* YOUTUBE MUSIC */
+let player
 let playing=false
+
+function onYouTubeIframeAPIReady(){
+player=new YT.Player('player',{
+height:'0',
+width:'0',
+videoId:'Fameo0cnJzI',
+playerVars:{
+'autoplay':0,
+'controls':0,
+'loop':1,
+'playlist':'Fameo0cnJzI'
+}
+})
+}
+
 const btn=document.getElementById("musicBtn")
-const player=document.getElementById("ytmusic")
 
 btn.onclick=()=>{
 if(!playing){
-player.src="https://www.youtube.com/embed/Fameo0cnJzI?autoplay=1&loop=1&playlist=Fameo0cnJzI"
+player.playVideo()
 btn.innerText="🔇 Stop Music"
 playing=true
 }else{
-player.src="https://www.youtube.com/embed/Fameo0cnJzI"
+player.pauseVideo()
 btn.innerText="🔊 Play Music"
 playing=false
 }
 }
+
 </script>
 
 </body>
