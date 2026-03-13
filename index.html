@@ -1,327 +1,242 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>LYNEXILS</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Orbitron',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif}
 
 body{
-background:#001a33;
-color:#66ccff;
+background:radial-gradient(circle at 50% 40%, #0b2c4d 0%, #03172b 40%, #010b15 100%);
+color:#8ad7ff;
 overflow:hidden;
 text-align:center;
 }
 
+/* PARTICLES BACKGROUND */
 #particles-js{
 position:fixed;
 width:100%;
 height:100%;
-z-index:-1;
+z-index:-2;
 }
 
-/* INTRO */
-
-#intro{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#001a33;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:1000;
-}
-
-.logo-img{
-width:180px;
-animation:logoAnim 2s ease;
-filter:drop-shadow(0 0 25px #33ccff);
-}
-
-@keyframes logoAnim{
-0%{opacity:0; transform:scale(0.5);}
-50%{opacity:1; transform:scale(1.2);}
-100%{transform:scale(1);}
-}
-
-/* MAIN */
-
+/* CENTER CARD */
 .container{
 position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-width:90%;
+padding:40px;
+border-radius:20px;
+background:rgba(255,255,255,0.04);
+backdrop-filter:blur(10px);
+box-shadow:0 0 40px rgba(56,189,248,.3);
+animation:float 6s ease-in-out infinite;
 }
 
+@keyframes float{
+0%{transform:translate(-50%,-50%)}
+50%{transform:translate(-50%,-54%)}
+100%{transform:translate(-50%,-50%)}
+}
+
+/* PROFILE */
 .profile{
 width:140px;
 height:140px;
 border-radius:50%;
-border:4px solid #33ccff;
-box-shadow:0 0 30px #33ccff;
+border:3px solid #38bdf8;
+box-shadow:0 0 20px #38bdf8,0 0 60px rgba(56,189,248,.7);
+transition:.3s;
 object-fit:cover;
-margin-bottom:15px;
+}
+
+.profile:hover{
+transform:scale(1.08);
+box-shadow:0 0 30px #38bdf8,0 0 100px rgba(56,189,248,.9);
+}
+
+/* TITLE */
+h1{
+font-size:32px;
+letter-spacing:3px;
+margin-top:12px;
+color:#7dd3fc;
+text-shadow:0 0 5px #38bdf8,0 0 20px #38bdf8,0 0 50px rgba(56,189,248,.7);
+}
+
+/* CYBER LINE */
+.line{
+width:140px;
+height:2px;
+background:linear-gradient(90deg,transparent,#38bdf8,transparent);
+margin:14px auto;
+box-shadow:0 0 10px #38bdf8;
+}
+
+/* TEXT */
+.desc{
+font-size:14px;
+margin-bottom:5px;
+opacity:.9;
 }
 
 /* BUTTON */
-
 .btn{
-position:relative;
 display:inline-block;
-margin:15px 8px;
-padding:12px 28px;
-color:white;
+margin:10px;
+padding:12px 26px;
+border-radius:12px;
+background:rgba(56,189,248,.08);
+border:1px solid #38bdf8;
+color:#8ad7ff;
 text-decoration:none;
-border-radius:10px;
-overflow:hidden;
+box-shadow:0 0 15px rgba(56,189,248,.4);
+transition:.25s;
 }
 
-.btn span{
-position:absolute;
-display:block;
+.btn:hover{
+background:#38bdf8;
+color:#021220;
+transform:translateY(-3px);
+box-shadow:0 0 20px #38bdf8,0 0 40px #38bdf8;
 }
 
-.btn span:nth-child(1){
-top:0;
-left:-100%;
-width:100%;
-height:2px;
-background:linear-gradient(90deg,transparent,#c77dff);
-animation:btn1 1.5s linear infinite;
-}
-
-@keyframes btn1{
-0%{left:-100%;}
-100%{left:100%;}
-}
-
-.btn span:nth-child(2){
-top:-100%;
-right:0;
-width:2px;
-height:100%;
-background:linear-gradient(180deg,transparent,#c77dff);
-animation:btn2 1.5s linear infinite;
-animation-delay:.25s;
-}
-
-@keyframes btn2{
-0%{top:-100%;}
-100%{top:100%;}
-}
-
-.btn span:nth-child(3){
-bottom:0;
-right:-100%;
-width:100%;
-height:2px;
-background:linear-gradient(270deg,transparent,#c77dff);
-animation:btn3 1.5s linear infinite;
-animation-delay:.5s;
-}
-
-@keyframes btn3{
-0%{right:-100%;}
-100%{right:100%;}
-}
-
-.btn span:nth-child(4){
-bottom:-100%;
-left:0;
-width:2px;
-height:100%;
-background:linear-gradient(360deg,transparent,#c77dff);
-animation:btn4 1.5s linear infinite;
-animation-delay:.75s;
-}
-
-@keyframes btn4{
-0%{bottom:-100%;}
-100%{bottom:100%;}
-}
-
-/* LOADER */
-
-#loader{
+/* MUSIC BUTTON */
+.music-box{
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(5,0,10,0.75);
-backdrop-filter:blur(6px);
-display:none;
-justify-content:center;
-align-items:center;
-flex-direction:column;
+bottom:25px;
+right:25px;
 z-index:999;
 }
 
-.loader-circle{
-width:120px;
-height:120px;
-border:6px solid rgba(255,255,255,0.1);
-border-top:6px solid #c77dff;
-border-radius:50%;
-animation:spin 1s linear infinite;
-box-shadow:0 0 20px #c77dff;
-margin-bottom:20px;
+#musicBtn{
+background:rgba(56,189,248,.15);
+border:1px solid #38bdf8;
+color:#7dd3fc;
+padding:10px 20px;
+border-radius:10px;
+cursor:pointer;
+box-shadow:0 0 10px #38bdf8;
+transition:.25s;
 }
 
-@keyframes spin{
-0%{transform:rotate(0deg);}
-100%{transform:rotate(360deg);}
+#musicBtn:hover{
+background:#38bdf8;
+color:#021220;
+box-shadow:0 0 20px #38bdf8,0 0 40px #38bdf8;
 }
 
-.loader-text{
-font-size:18px;
+/* SHOOTING STAR */
+.star{
+position:absolute;
+width:2px;
+height:60px;
+background:linear-gradient(-45deg,#38bdf8,transparent);
+animation:shoot 4s linear;
 }
 
-.percent{
-margin-top:6px;
-font-size:14px;
+@keyframes shoot{
+0%{transform:translate(0,0) rotate(-45deg)}
+100%{transform:translate(-500px,500px) rotate(-45deg);opacity:0}
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
-
-<div id="intro">
-<img src="https://img5.pic.in.th/file/secure-sv1/giphy51237577dc5e6fce.gif" class="logo-img">
-</div>
-
 <div id="particles-js"></div>
-
-<!-- MAIN -->
 
 <div class="container">
 
 <img src="https://img2.pic.in.th/c7b7cdd5b55526afb9648d6748293599.jpg" class="profile">
 
-<h1>LYNEXILS</h1>
+<h1 id="typing"></h1>
 
-<p>
-ทางเข้า Discord เเละ Website <br>
-กดปุ่มด้านล่างเพื่อเข้าเซิร์ฟเวอร์
-<br><br>
-<h3>Developer</h3>
-Discord & Website
-</p>
+<div class="line"></div>
 
-<a class="btn" href="https://discord.gg/3MHwDyjV">
-<span></span><span></span><span></span><span></span>
-My Discord
-</a>
+<div class="desc">ทางเข้า Discord และ Website</div>
+<div class="desc">Developer</div>
 
-<a class="btn" href="https://www.lynexils.site/">
-<span></span><span></span><span></span><span></span>
-My Website
-</a>
+<br>
+
+<a class="btn" href="https://discord.gg/3MHwDyjV">My Discord</a>
+<a class="btn" href="https://www.lynexils.site/">My Website</a>
 
 </div>
 
-<!-- LOADER -->
-
-<div id="loader">
-<div class="loader-circle"></div>
-<div class="loader-text">Loading</div>
-<div class="percent" id="percent">0%</div>
+<!-- MUSIC -->
+<div class="music-box">
+<button id="musicBtn">🔊 Play Music</button>
 </div>
 
-<!-- SCRIPT -->
+<iframe id="ytmusic" width="0" height="0"
+src="https://www.youtube.com/embed/Fameo0cnJzI?enablejsapi=1&loop=1&playlist=Fameo0cnJzI"
+frameborder="0" allow="autoplay"></iframe>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
 <script>
-
 particlesJS("particles-js",{
 particles:{
 number:{value:80},
-color:{value:"#c77dff"},
+color:{value:"#7c3aed"},
 shape:{type:"circle"},
-opacity:{value:0.5},
+opacity:{value:.6},
 size:{value:3},
-line_linked:{
-enable:true,
-distance:150,
-color:"#9d4edd",
-opacity:0.4
-},
-move:{
-enable:true,
-speed:2
-}
+line_linked:{enable:true,distance:150,color:"#7c3aed",opacity:.4},
+move:{enable:true,speed:2}
 },
 interactivity:{
-events:{
-onhover:{enable:true,mode:"repulse"},
-onclick:{enable:true,mode:"push"}
-},
-modes:{
-repulse:{distance:120},
-push:{particles_nb:4}
+events:{onhover:{enable:true,mode:"repulse"}},
+modes:{repulse:{distance:120}}
 }
-},
-retina_detect:true
 })
 
-setTimeout(()=>{
-document.getElementById("intro").style.display="none"
-},2200)
-
-document.querySelectorAll("a").forEach(link=>{
-
-link.addEventListener("click",function(e){
-
-let url=this.href
-if(!url)return
-
-e.preventDefault()
-
-document.getElementById("loader").style.display="flex"
-
-let percent=document.getElementById("percent")
-
+/* TYPING */
+const text="LYNEXILS"
 let i=0
-
-let loading=setInterval(()=>{
-
-i+=4
-percent.innerText=i+"%"
-
-if(i>=100){
-
-clearInterval(loading)
-
-setTimeout(()=>{
-window.location=url
-},300)
-
+function typing(){
+if(i<text.length){
+document.getElementById("typing").innerHTML+=text.charAt(i)
+i++
+setTimeout(typing,120)
 }
+}
+typing()
 
-},80)
+/* SHOOTING STAR */
+function star(){
+const s=document.createElement("div")
+s.className="star"
+s.style.left=Math.random()*window.innerWidth+"px"
+s.style.top=Math.random()*window.innerHeight+"px"
+document.body.appendChild(s)
+setTimeout(()=>{s.remove()},4000)
+}
+setInterval(star,1500)
 
-})
+/* MUSIC */
+let playing=false
+const btn=document.getElementById("musicBtn")
+const player=document.getElementById("ytmusic")
 
-})
-
+btn.onclick=()=>{
+if(!playing){
+player.src="https://www.youtube.com/embed/Fameo0cnJzI?autoplay=1&loop=1&playlist=Fameo0cnJzI"
+btn.innerText="🔇 Stop Music"
+playing=true
+}else{
+player.src="https://www.youtube.com/embed/Fameo0cnJzI"
+btn.innerText="🔊 Play Music"
+playing=false
+}
+}
 </script>
 
 </body>
