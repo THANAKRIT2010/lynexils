@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LYNEXILS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
+}
+
+body{
+background:#05000a;
+color:#c77dff;
+overflow:hidden;
+text-align:center;
+}
+
+#particles-js{
+position:fixed;
+width:100%;
+height:100%;
+z-index:-1;
+}
+
+/* INTRO */
+
+#intro{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#05000a;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:1000;
+}
+
+.logo-img{
+width:180px;
+animation:logoAnim 2s ease;
+filter:drop-shadow(0 0 25px #9d4edd);
+}
+
+@keyframes logoAnim{
+0%{opacity:0; transform:scale(0.5);}
+50%{opacity:1; transform:scale(1.2);}
+100%{transform:scale(1);}
+}
+
+/* MAIN */
+
+.container{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:90%;
+}
+
+.profile{
+width:140px;
+height:140px;
+border-radius:50%;
+border:4px solid #9d4edd;
+box-shadow:0 0 30px #9d4edd;
+object-fit:cover;
+margin-bottom:15px;
+}
+
+/* BUTTON */
+
+.btn{
+position:relative;
+display:inline-block;
+margin:15px 8px;
+padding:12px 28px;
+color:white;
+text-decoration:none;
+border-radius:10px;
+overflow:hidden;
+}
+
+.btn span{
+position:absolute;
+display:block;
+}
+
+.btn span:nth-child(1){
+top:0;
+left:-100%;
+width:100%;
+height:2px;
+background:linear-gradient(90deg,transparent,#c77dff);
+animation:btn1 1.5s linear infinite;
+}
+
+@keyframes btn1{
+0%{left:-100%;}
+100%{left:100%;}
+}
+
+.btn span:nth-child(2){
+top:-100%;
+right:0;
+width:2px;
+height:100%;
+background:linear-gradient(180deg,transparent,#c77dff);
+animation:btn2 1.5s linear infinite;
+animation-delay:.25s;
+}
+
+@keyframes btn2{
+0%{top:-100%;}
+100%{top:100%;}
+}
+
+.btn span:nth-child(3){
+bottom:0;
+right:-100%;
+width:100%;
+height:2px;
+background:linear-gradient(270deg,transparent,#c77dff);
+animation:btn3 1.5s linear infinite;
+animation-delay:.5s;
+}
+
+@keyframes btn3{
+0%{right:-100%;}
+100%{right:100%;}
+}
+
+.btn span:nth-child(4){
+bottom:-100%;
+left:0;
+width:2px;
+height:100%;
+background:linear-gradient(360deg,transparent,#c77dff);
+animation:btn4 1.5s linear infinite;
+animation-delay:.75s;
+}
+
+@keyframes btn4{
+0%{bottom:-100%;}
+100%{bottom:100%;}
+}
+
+/* LOADER */
+
+#loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(5,0,10,0.75);
+backdrop-filter:blur(6px);
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:999;
+}
+
+.loader-circle{
+width:120px;
+height:120px;
+border:6px solid rgba(255,255,255,0.1);
+border-top:6px solid #c77dff;
+border-radius:50%;
+animation:spin 1s linear infinite;
+box-shadow:0 0 20px #c77dff;
+margin-bottom:20px;
+}
+
+@keyframes spin{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+
+.loader-text{
+font-size:18px;
+}
+
+.percent{
+margin-top:6px;
+font-size:14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+
+<div id="intro">
+<img src="https://img5.pic.in.th/file/secure-sv1/giphy51237577dc5e6fce.gif" class="logo-img">
+</div>
+
+<div id="particles-js"></div>
+
+<!-- MAIN -->
+
+<div class="container">
+
+<img src="https://img2.pic.in.th/c7b7cdd5b55526afb9648d6748293599.jpg" class="profile">
+
+<h1>LYNEXILS</h1>
+
+<p>
+ทางเข้า Discord เเละ Website <br>
+กดปุ่มด้านล่างเพื่อเข้าเซิร์ฟเวอร์
+<br><br>
+<h3>Developer</h3>
+Discord & Website
+</p>
+
+<a class="btn" href="https://discord.gg/3MHwDyjV">
+<span></span><span></span><span></span><span></span>
+My Discord
+</a>
+
+<a class="btn" href="https://www.lynexils.site/">
+<span></span><span></span><span></span><span></span>
+My Website
+</a>
+
+</div>
+
+<!-- LOADER -->
+
+<div id="loader">
+<div class="loader-circle"></div>
+<div class="loader-text">Loading</div>
+<div class="percent" id="percent">0%</div>
+</div>
+
+<!-- SCRIPT -->
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+<script>
+
+particlesJS("particles-js",{
+particles:{
+number:{value:80},
+color:{value:"#c77dff"},
+shape:{type:"circle"},
+opacity:{value:0.5},
+size:{value:3},
+line_linked:{
+enable:true,
+distance:150,
+color:"#9d4edd",
+opacity:0.4
+},
+move:{
+enable:true,
+speed:2
+}
+},
+interactivity:{
+events:{
+onhover:{enable:true,mode:"repulse"},
+onclick:{enable:true,mode:"push"}
+},
+modes:{
+repulse:{distance:120},
+push:{particles_nb:4}
+}
+},
+retina_detect:true
+})
+
+setTimeout(()=>{
+document.getElementById("intro").style.display="none"
+},2200)
+
+document.querySelectorAll("a").forEach(link=>{
+
+link.addEventListener("click",function(e){
+
+let url=this.href
+if(!url)return
+
+e.preventDefault()
+
+document.getElementById("loader").style.display="flex"
+
+let percent=document.getElementById("percent")
+
+let i=0
+
+let loading=setInterval(()=>{
+
+i+=4
+percent.innerText=i+"%"
+
+if(i>=100){
+
+clearInterval(loading)
+
+setTimeout(()=>{
+window.location=url
+},300)
+
+}
+
+},80)
+
+})
+
+})
+
+</script>
+
+</body>
+</html>
