@@ -23,7 +23,6 @@ overflow:hidden;
 text-align:center;
 }
 
-/* PARTICLES */
 #particles-js{
 position:fixed;
 width:100%;
@@ -31,7 +30,6 @@ height:100%;
 z-index:-2;
 }
 
-/* CARD */
 .container{
 position:absolute;
 top:50%;
@@ -108,16 +106,15 @@ box-shadow:0 0 20px #38bdf8,0 0 40px #38bdf8;
 
 .music-player{
 position:fixed;
-top:20px;
-left:50%;
-transform:translateX(-50%);
+right:20px;
+bottom:20px;
 background:white;
 color:black;
 padding:10px 20px;
 border-radius:40px;
 display:flex;
 align-items:center;
-gap:15px;
+gap:12px;
 box-shadow:0 10px 30px rgba(0,0,0,.3);
 z-index:999;
 }
@@ -130,10 +127,11 @@ width:35px;
 height:35px;
 border-radius:50%;
 cursor:pointer;
+font-size:14px;
 }
 
 .music-player input{
-width:100px;
+width:90px;
 }
 
 .star{
@@ -156,23 +154,6 @@ animation:shoot 4s linear;
 
 <div id="particles-js"></div>
 
-<!-- MUSIC UI -->
-
-<div class="music-player">
-
-<img src="https://img.youtube.com/vi/Fameo0cnJzI/mqdefault.jpg" width="40" style="border-radius:50%">
-
-<div>
-<div style="font-size:13px;font-weight:bold">ที่ผ่านมา</div>
-<div id="status" style="font-size:11px;color:gray">PAUSED</div>
-</div>
-
-<button id="play">▶</button>
-
-<input id="volume" type="range" min="0" max="1" step="0.01" value="0.5">
-
-</div>
-
 <div class="container">
 
 <img src="https://img1.pic.in.th/images/640295924_17881802595466056_305289795150674999_n.jpg" class="profile">
@@ -193,9 +174,26 @@ animation:shoot 4s linear;
 
 </div>
 
-<audio id="music" loop>
-<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8f6b0b4b0.mp3" type="audio/mp3">
-</audio>
+<!-- MUSIC UI -->
+
+<div class="music-player">
+
+<button id="play">▶</button>
+
+<input id="volume" type="range" min="0" max="100" value="50">
+
+</div>
+
+<!-- YOUTUBE PLAYER -->
+
+<iframe
+id="ytplayer"
+width="0"
+height="0"
+src="https://www.youtube.com/embed/TkyhQqVBbWQ?autoplay=1&mute=1&loop=1&playlist=TkyhQqVBbWQ&controls=0"
+frameborder="0"
+allow="autoplay"
+></iframe>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
@@ -236,29 +234,6 @@ setTimeout(()=>{s.remove()},4000)
 }
 
 setInterval(star,1500)
-
-const music=document.getElementById("music")
-const play=document.getElementById("play")
-const status=document.getElementById("status")
-const volume=document.getElementById("volume")
-
-play.onclick=()=>{
-
-if(music.paused){
-music.play()
-play.innerHTML="⏸"
-status.innerHTML="NOW PLAYING"
-}else{
-music.pause()
-play.innerHTML="▶"
-status.innerHTML="PAUSED"
-}
-
-}
-
-volume.oninput=()=>{
-music.volume=volume.value
-}
 
 </script>
 
