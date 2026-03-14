@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="th">
 <head>
 <meta charset="UTF-8">
@@ -54,7 +53,6 @@ width:90%;
 100%{transform:translate(-50%,-50%)}
 }
 
-/* PROFILE */
 .profile{
 width:140px;
 height:140px;
@@ -64,7 +62,6 @@ box-shadow:0 0 20px #38bdf8,0 0 60px rgba(56,189,248,.7);
 object-fit:cover;
 }
 
-/* TITLE */
 h1{
 font-size:32px;
 letter-spacing:3px;
@@ -73,7 +70,6 @@ color:#7dd3fc;
 text-shadow:0 0 5px #38bdf8,0 0 20px #38bdf8,0 0 50px rgba(56,189,248,.7);
 }
 
-/* LINE */
 .line{
 width:140px;
 height:2px;
@@ -88,7 +84,6 @@ margin-bottom:5px;
 opacity:.9;
 }
 
-/* BUTTON */
 .btn{
 display:inline-block;
 margin:10px;
@@ -109,7 +104,38 @@ transform:translateY(-3px);
 box-shadow:0 0 20px #38bdf8,0 0 40px #38bdf8;
 }
 
-/* STAR */
+/* MUSIC PLAYER */
+
+.music-player{
+position:fixed;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+background:white;
+color:black;
+padding:10px 20px;
+border-radius:40px;
+display:flex;
+align-items:center;
+gap:15px;
+box-shadow:0 10px 30px rgba(0,0,0,.3);
+z-index:999;
+}
+
+.music-player button{
+border:none;
+background:#1e7bff;
+color:white;
+width:35px;
+height:35px;
+border-radius:50%;
+cursor:pointer;
+}
+
+.music-player input{
+width:100px;
+}
+
 .star{
 position:absolute;
 width:2px;
@@ -124,12 +150,28 @@ animation:shoot 4s linear;
 }
 
 </style>
-
 </head>
 
 <body>
 
 <div id="particles-js"></div>
+
+<!-- MUSIC UI -->
+
+<div class="music-player">
+
+<img src="https://img.youtube.com/vi/Fameo0cnJzI/mqdefault.jpg" width="40" style="border-radius:50%">
+
+<div>
+<div style="font-size:13px;font-weight:bold">ที่ผ่านมา</div>
+<div id="status" style="font-size:11px;color:gray">PAUSED</div>
+</div>
+
+<button id="play">▶</button>
+
+<input id="volume" type="range" min="0" max="1" step="0.01" value="0.5">
+
+</div>
 
 <div class="container">
 
@@ -144,15 +186,21 @@ animation:shoot 4s linear;
 
 <br>
 
-<a class="btn" href="https://discord.gg/zxYqekBMMF">Discord</a> <a class="btn" href="https://www.facebook.com/ezmxy.xi.25448">Facebook</a> <a class="btn" href="https://www.instagram.com/ezmxyxii/">Instagram</a> <a class="btn" href="https://www.tiktok.com/@thanakrit14347">TikTok V1</a>
+<a class="btn" href="https://discord.gg/zxYqekBMMF">Discord</a>
+<a class="btn" href="https://www.facebook.com/ezmxy.xi.25448">Facebook</a>
+<a class="btn" href="https://www.instagram.com/ezmxyxii/">Instagram</a>
+<a class="btn" href="https://www.tiktok.com/@thanakrit14347">TikTok</a>
 
 </div>
+
+<audio id="music" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8f6b0b4b0.mp3" type="audio/mp3">
+</audio>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
 <script>
 
-/* PARTICLES */
 particlesJS("particles-js",{
 particles:{
 number:{value:80},
@@ -165,7 +213,6 @@ move:{enable:true,speed:2}
 }
 })
 
-/* TYPING */
 const text="THANAKRIT PHOKAEW 2010"
 let i=0
 
@@ -178,7 +225,6 @@ setTimeout(typing,120)
 }
 typing()
 
-/* SHOOTING STAR */
 function star(){
 const s=document.createElement("div")
 s.className="star"
@@ -186,25 +232,35 @@ s.style.left=Math.random()*window.innerWidth+"px"
 s.style.top=Math.random()*window.innerHeight+"px"
 document.body.appendChild(s)
 
-setTimeout(()=>{
-s.remove()
-},4000)
+setTimeout(()=>{s.remove()},4000)
 }
 
 setInterval(star,1500)
 
+const music=document.getElementById("music")
+const play=document.getElementById("play")
+const status=document.getElementById("status")
+const volume=document.getElementById("volume")
+
+play.onclick=()=>{
+
+if(music.paused){
+music.play()
+play.innerHTML="⏸"
+status.innerHTML="NOW PLAYING"
+}else{
+music.pause()
+play.innerHTML="▶"
+status.innerHTML="PAUSED"
+}
+
+}
+
+volume.oninput=()=>{
+music.volume=volume.value
+}
+
 </script>
-
-<!-- MUSIC AUTOPLAY -->
-
-<iframe
-width="0"
-height="0"
-style="display:none"
-frameborder="0"
-allow="autoplay; encrypted-media"
-src="https://www.youtube.com/embed/Fameo0cnJzI?autoplay=1&controls=0&loop=1&playlist=Fameo0cnJzI">
-</iframe>
 
 </body>
 </html>
