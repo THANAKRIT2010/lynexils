@@ -1,5 +1,5 @@
-```html
 <!DOCTYPE html>
+
 <html lang="th">
 <head>
 <meta charset="UTF-8">
@@ -143,6 +143,7 @@ animation:shoot 4s linear;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -158,14 +159,11 @@ animation:shoot 4s linear;
 <div class="line"></div>
 
 <div class="desc">ทางเข้า Discord และ Facebook / Instagram / TikTok</div>
-<div class="desc">  อย่าลืม กดติดตามกันน่ะครับ >< </div>
+<div class="desc">อย่าลืม กดติดตามกันน่ะครับ ><</div>
 
 <br>
 
-<a class="btn" href="https://discord.gg/zxYqekBMMF">Discord</a>
-<a class="btn" href="https://www.facebook.com/ezmxy.xi.25448">Facebook</a>
-<a class="btn" href="https://www.instagram.com/ezmxyxii/">Instagram</a>
-<a class="btn" href="https://www.tiktok.com/@thanakrit14347">TikTok V1 </a>
+<a class="btn" href="https://discord.gg/zxYqekBMMF">Discord</a> <a class="btn" href="https://www.facebook.com/ezmxy.xi.25448">Facebook</a> <a class="btn" href="https://www.instagram.com/ezmxyxii/">Instagram</a> <a class="btn" href="https://www.tiktok.com/@thanakrit14347">TikTok V1</a>
 
 </div>
 
@@ -173,7 +171,7 @@ animation:shoot 4s linear;
 <button id="musicBtn">🔊 Play Music</button>
 </div>
 
-<iframe id="music" width="0" height="0" frameborder="0" allow="autoplay"></iframe>
+<iframe id="music" width="0" height="0" style="display:none" frameborder="0" allow="autoplay; encrypted-media"></iframe>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
@@ -226,22 +224,33 @@ const btn=document.getElementById("musicBtn")
 const frame=document.getElementById("music")
 
 function startMusic(){
-frame.src="https://www.youtube.com/embed/2yUD--XAnJg?autoplay=1&loop=1&playlist=2yUD--XAnJg"
+frame.src="https://www.youtube.com/embed/2yUD--XAnJg?autoplay=1&controls=0&loop=1&playlist=2yUD--XAnJg"
 btn.innerText="🔇 Stop Music"
 playing=true
 }
 
-/* เล่นเพลงทันทีเมื่อเว็บโหลด */
-window.onload = () => {
-startMusic()
-}
-
-btn.onclick=()=>{
-if(playing){
+function stopMusic(){
 frame.src=""
 btn.innerText="🔊 Play Music"
 playing=false
+}
+
+/* คลิกครั้งแรกในเว็บให้เพลงเล่น */
+document.addEventListener("click",()=>{
+if(!playing){
+startMusic()
+}
+},{once:true})
+
+btn.onclick=()=>{
+if(playing){
+stopMusic()
 }else{
 startMusic()
 }
 }
+
+</script>
+
+</body>
+</html>
