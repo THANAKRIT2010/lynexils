@@ -231,7 +231,10 @@ btn.innerText="🔇 Stop Music"
 playing=true
 }
 
-document.addEventListener("click",startMusic,{once:true})
+/* เล่นเพลงทันทีเมื่อเว็บโหลด */
+window.onload = () => {
+startMusic()
+}
 
 btn.onclick=()=>{
 if(playing){
@@ -242,9 +245,3 @@ playing=false
 startMusic()
 }
 }
-
-</script>
-
-</body>
-</html>
-```
